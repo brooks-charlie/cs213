@@ -1,0 +1,212 @@
+html{
+    background-color: #fff;
+}
+body{
+    margin: 0;
+}
+h1 {
+    font-size: 80px;
+    text-transform: none;
+    color: navy;
+    font-family: Futura, "Trebuchet MS", Arial, sans-serif;
+    line-height: 1;
+}
+h2{
+
+    line-height: .1;
+}
+h3{
+    line-height: 20px;
+}
+
+#title{
+
+    background: gray;
+    height: 260px;
+
+    background: repeating-linear-gradient(lightsteelblue, lightgray);
+    padding-bottom:15px;
+    width:100%;
+    margin-top:30px;
+    padding-top:35px;
+    background-image: url('images/titlebackground.png');
+    background-repeat: no-repeat;
+    background-size: cover;
+    opacity:.3;
+}
+#corptext{
+    text-align: center;
+    position: absolute;
+    top:15px;
+    left:50px;
+
+
+}
+.block{
+    display:block;
+}
+header{
+    margin: 0px;
+    position: relative;
+    top:0px;
+    width:100%;
+    border:5px;
+    padding:0;
+
+}
+nav {
+    position: fixed;
+    top:0px;
+    left:0px;
+    width:100%;
+    margin: 0px;
+    padding:0;
+
+}
+main{
+    padding-top:0px;
+    margin-top:0px;
+    width:100%;
+    ;
+
+}
+main h2{
+    text-indent: 00px;
+}
+main div{
+    margin-left:10px;
+}
+.homeimg{
+   float: left;
+    width: 100%;
+    margin:10px;
+}
+.gallery{
+    display: block;
+    float: left;
+    width:30%;
+text-align: center;
+    height:300px;
+    font-family: "Comic Sans MS";
+
+    color: navy;
+text-transform: uppercase;
+}
+ul{
+    padding-left:0px;
+    padding-right: 0px;
+    list-style: none;
+    margin-left:0px;
+    margin-right:0px;
+    min-height: 30px;
+    margin-top:0px;
+    background: linear-gradient(cornflowerblue, navy);
+    width:100%;
+    border-style: none;
+    border-color: inherit;
+}
+li {
+    margin-left: 0px;
+    border-color: #000;
+    display:inline;
+    float: left;
+    background: linear-gradient(cornflowerblue, navy);
+    min-width: 120px;
+    text-align: center;
+    line-height:30px;
+    color: whitesmoke;
+    text-decoration: none;
+    font-family: Arial;
+
+
+
+}
+li a{
+    text-decoration: none;
+    color: darkcyan;
+
+}
+
+
+
+
+
+
+li:hover{
+    background: linear-gradient(navy, cornflowerblue);
+
+}
+.tooltip {
+    position: relative;
+    display: inline-block;
+    border-bottom: 1px dotted black;
+}
+
+.tooltip .tooltiptext {
+    visibility: hidden;
+    min-width: 120px;
+    background: linear-gradient(cornflowerblue, navy);
+    color: #fff;
+    text-align: center;
+    border-radius: 5px;
+    padding: 5px 0;
+    line-height:30px;
+
+    /* Position the tooltip */
+    position: absolute;
+    z-index: 1;
+    top: 100%;
+    left: 50%;
+    margin-left: -60px;
+}
+
+.tooltip:hover .tooltiptext {
+    visibility: visible;
+}
+div.team{
+    width: 100%;
+    height: 300px;
+    background-repeat: no-repeat;
+    background-size: contain;
+    border-bottom: 1px solid gray;
+    padding-bottom:90px;
+}
+.team img{
+    float: left;
+    margin:0px 10px 0px 10px;
+}
+div.bio {
+    height: 285px;
+    text-align: left;
+    margin-left: 320px;
+    margin-right: 10px;
+
+}
+#name{
+    font-family: Arial;
+    font-style: normal;
+    font-size: 20px;
+    line-height: .2;
+}
+#teammem{
+    color: gray;
+    font-size: 15px;
+    line-height: .2;
+}
+div.button{
+    display: block;
+padding-top: 20px;
+    margin-bottom: 0px;
+
+}
+button{
+
+    padding: 10px 28px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+
+    margin-left: 8px;
+    cursor: hand;
+}

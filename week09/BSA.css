@@ -1,0 +1,59 @@
+html{
+
+}
+#bsa{
+
+}
+h1{
+    text-align: center;
+}
+h2{
+    text-align: center;
+}
+div.scout{
+    max-width: 400px;
+    padding-bottom:10px;
+    margin-bottom: 20px;
+}
+div.troop{
+    display: none;
+    max-width: 400px;
+    background-color: darkkhaki;
+}
+.scout{
+     ;
+}
+table{
+
+}
+span{
+    display: block;
+    text-align: right;
+}
+tr:first-child{
+    color:white;
+    background-color: #666666;
+}
+ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: #005696;
+}
+
+li {
+    float: left;
+}
+
+li a {
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 16px;
+    text-decoration: none;
+}
+
+li a:hover {
+    background-color: #91b6d2;
+}

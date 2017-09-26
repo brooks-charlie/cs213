@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html>
+<head>
+   <script type="text/javascript" src="213.07.Ponder.js"></script>
+   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
+   <script>
+
+      // My assignment is to demonstrate JQuery
+      // I've used the code from last week to replace some javascript functionality
+      // and enhance it with JQuery
+       $(document).ready(function(){
+           // Updates the current in stock quatity on page load using AJAX
+           $("#swimmingstock").load("stock.txt #swimming");
+           $("#moabstock").load("stock.txt #moab");
+           $("#baseballstock").load("stock.txt #baseball");
+
+           // Get today's price from the file using AJAX
+           // Load the price only on page load
+           $("#swimmingprice").load("price.txt #swimming");
+           $("#moabprice").load("price.txt #moab");
+           $("#baseballprice").load("price.txt #baseball");
+
+
+           // makes the pictues of the items larger if hovered over to give a better view
+           // then reduces them back to normal size when the mouse is not over them
+           $("div.item img, div.item").hover(function(){
+               // Only set the hight of the next sibling element div.itemdesc
+               // so it's more fluid with the resize.
+               $(this).next("div.itemdesc").animate({
+                   height: '+=120'
+               });
+               $(this).animate({
+                   width: '+=150px'
+               });
+               },
+               function(){
+               $(this).next("div.itemdesc").animate({
+                   height: '-=120'
+               });
+               $(this).animate({
+                   width: '-=150px'
+                   });
+               });
+
+
+           // Sets all the input fields to yellow when focused to help the person itentify where
+           // the focus is easliy. Also selects everything in the field to make it easy to update.
+           $("input").focus(function(){
+               // sets color for all input fields except the reset button
+               $(this).not("#reset").css("background-color", "yellow");
+               // Selects all the text in the field as soon as it gets focus.
+               $(this).select();
+           });
+           // Sets the input field back to white when focus is removed.
+           $("input").blur(function(){
+               $(this).css("background-color", "#ffffff");
+           });
+           // Moved this from the javascript file to copy all the fields from the billing form
+           // to the shipping form if checkbox is selected.
+           // If it's not selected it will clear them out.
+           $("#copyBilltoShip").click(function() {
+               if (this.checked) {
+                   $("#shipfirstname").val($("#firstname").val());
+                   $("#shiplastname").val($("#lastname").val());
+                   $("#shipaddress1").val($("#address1").val());
+                   $("#shipaddress2").val($("#address2").val());
+                   $("#shipCity").val($("#City").val());
+                   $("#shipState").val($("#State").val());
+                   $("#shipZip").val($("#Zip").val());
+                   $("#shipphone").val($("#phone").val());
+                   $("#shipemail").val($("#email").val());
+           }
+           else{
+                   $("#shipfirstname").val("");
+                   $("#shiplastname").val("");
+                   $("#shipaddress1").val("");
+                   $("#shipaddress2").val("");
+                   $("#shipCity").val("");
+                   $("#shipState").val("");
+                   $("#shipZip").val("");
+                   $("#shipphone").val("");
+                   $("#shipemail").val("");
+               }
+           });
+           // Reset button functionality to reset all item values and total amount back to 0
+           $("#reset").click(function(){
+               $(".qtyinput").val("0");
+               $("#totalamount").val("$0.00");
+               // This will also refresh the current in stock count for all items
+               $("#swimmingstock").load("stock.txt #swimming");
+               $("#moabstock").load("stock.txt #moab");
+               $("#baseballstock").load("stock.txt #baseball");
+               });
+           // Toggle the display the description for each item
+           $(".flip").click(function(){
+               $(this).next(".panel").slideToggle("fast");
+               // Conditional parameter to toggle and display Show less if the descriont is showing
+               // and display Show more if it's not.
+               $(this).html($(this).text() == 'Show less' ? 'Show more' : 'Show less');
+           });
+       });
+   </script>
+   <title>Brooks Corporation</title>
+   <link rel="stylesheet" type="text/css" href="week07.css">
+   <style> /*<!-- One internal style -->*/
+   img{
+      float: left;
+   }
+   </style>
+</head>
+<body onscroll="showSlogan()" onload="resetValues()">
+<header>
+   <div id="cornerlogo">
+      <a href="home.html"><img src="images/brooks_corp_logo_white.gif"></a>
+      <h2 class="hide" id="topbar">Where Good Things Happen</h2>
+   </div>
+   <div id="title"></div>
+   <div id="corptext">
+      <img class="logo" src="images/brooks_corp_logo.gif"/>
+      <h2 id="logo">Where Good Things Happen </h2>
+
+   </div>
+
+   <nav>
+      <ul>
+         <a href="home.html"><li>Home</li></a><!-- One inline style -->
+         <a href="team.html"><li>The Team</li></a>
+         <a href="index.html"><li style="background: linear-gradient(navy, cornflowerblue);">Shopping</li></a>
+      </ul>
+   </nav>
+</header>
+
+<main>
+   <div id="maindiv">
+
+
+      <br>
+
+      <p></p>
+      <div class="shopcart" id="shophead">
+      <div class="itemhead">Shopping Cart</div>
+      <div class="" id="price">Price</div>
+      <div class="" id="quantity">Quantity</div>
+      </div>
+      <div>
+
+      </div>
+      <br>
+      <hr>
+      <form action="cart.php" id="payment-form" method="post">
+
+         <div class="item">
+            <img src="images/rafting.png" width="175"/>
+         </div>
+         <div class="itemdesc">
+            <p class="itemName">Trip to Moab to go river rafting</p>
+            <p class="itemPrice" id="moabprice">$10.95</p>
+            <div style="display: inline-block;">Qty in stock</div>
+            <div id="moabstock" style="display: inline; color: red; font-weight: bold;"></div>
+            <input class="qtyinput" size="5" name="moabquantity" value="0" onInput="checkNum(this.value,'invalidNum0')"/>
+            <div class="qtytooltip">
+               <span class="qtytooltiptext" id="invalidNum0">Please contact us directly if you require more than 99</span>
+            </div>
+
+
+            <hr>
+            <p>Rafting Description</p><p class="flip">Show more...</p>
+            <p class="panel">This is a fun experience for the whole family. The kids can bring their
+               friends and blah blah blah blah blah blah blah blah blah blah blah blah
+               blah blah blah blah blah blah blah blah blah
+               blah blah blah blah blah blah blah blah blah </p>
+         </div>
+         <br>
+         <hr>
+
+         <div class="item">
+            <img src="images/swimming.jpg" width="175"/>
+         </div>
+         <div class="itemdesc">
+            <p class="itemName">Swimming in the pool</p>
+            <p class="itemPrice" id="swimmingprice">$11.95</p>
+            <div style="display: inline-block; ">Qty in stock</div>
+            <div id="swimmingstock" style="display: inline; color: red; font-weight: bold;"></div>
+            <input class="qtyinput" size="5" name="poolquantity" value="0" onInput="checkNum(this.value,'invalidNum1')"/>
+            <div class="qtytooltip">
+            <span class="qtytooltiptext" id="invalidNum1">Please contact us directly if you require more than 99</span>
+            </div>
+
+            <hr>
+            <p>Swimming Description </p><p class="flip">Show more...</p>
+            <p class="panel">This is a fun experience for the whole family. The kids can bring their
+            friends and blah blah blah blah blah blah blah blah blah blah blah blah
+               blah blah blah blah blah blah blah blah blah
+               blah blah blah blah blah blah blah blah blah </p>
+         </div>
+         <br>
+         <hr>
+
+         <div class="item">
+            <img src="images/rough_riders_gallery.png" width="175"/>
+         </div>
+         <div class="itemdesc">
+            <p class="itemName">Baseball Game</p>
+            <p class="itemPrice" name="itemprice" id="baseballprice">$1.22</p>
+            <div style="display: inline-block; ">Qty in stock</div>
+            <div id="baseballstock" style="display: inline; color: red; font-weight: bold;"></div>
+            <input class="qtyinput" size="5" name="baseballquantity" value="0" onInput="checkNum(this.value,'invalidNum2')"/>
+            <div class="qtytooltip">
+               <span class="qtytooltiptext" id="invalidNum2">Please contact us directly if you require more than 99</span>
+            </div>
+
+
+            <hr>
+            <p>Baseball Game description</p><p class="flip">Show more...</p>
+            <p class="panel">This is a fun experience for the whole family. The kids can bring their
+               friends and blah blah blah blah blah blah blah blah blah blah blah blah
+               blah blah blah blah blah blah blah blah blah
+               blah blah blah blah blah blah blah blah blah </p>
+         </div>
+         <input type = "button"  id = "reset" value = "Reset" style="display: inline-block;float: right;">
+         <br>
+         <br>
+
+         <hr>
+
+
+         <br>
+         <hr>
+         <div class="total" id="shopfoot">
+
+            <div class="" id="subtotal">Subtotal</div>
+            <div class="" id="totalamount1"><input id="totalamount" name="totalamount" size="8" value="$000.00" readonly/> </div>
+         </div>
+      <br>
+      <hr>
+   <h2>Billing information</h2>
+
+<br>
+
+      <fieldset>
+
+            <ul class="tooltip">
+               <li class="inline-left-label"><label for="firstname">First Name</label><span class="tooltiptext" id="invalidFirstName">First Name is required</span></li>
+               <li class="inline-left">  <input type="text" name="firstname" id="firstname" size = "30" maxlength="80" value="" onblur="checkData(this.value,'invalidFirstName')"></li>
+
+               <li class="inline-right-label"><label for = "lastname">Last Name</label><span class="tooltiptext" id="invalidLastName">Last Name is required</span></li>
+               <li class="inline-right"><input type = "text" name = "lastname" id = "lastname" size = "30" maxlength="80" value=""  onblur="checkData(this.value,'invalidLastName')"></li>
+
+               <li class="inline-left-label"><label for = "address1">Address</label><span class="tooltiptext" id="invalidAddress">a valid address is required</span></li>
+               <li class="inline-left"><input type = "text" name = "address1" id = "address1" size = "70" value=""  onblur="checkData(this.value,'invalidAddress')"></li>
+
+               <li class="inline-left-label"><label for = "address2">Address2 (Optional) Apartment, suite, floor, etc.</label></li>
+               <li class="inline-left"><input type = "text" name = "address2" id = "address2" size = "70" value="" ></li>
+
+               <li class="inline-left-label"><label for = "City">City</label><span class="tooltiptext" id="invalidCity">A valid City is required</span></li>
+               <li class="inline-left"><input type="text" name = "City" id = "City" size = "30" value=""  onblur="checkData(this.value,'invalidCity')">
+                  </li>
+
+               <li class="inline-middle-label"><label for = "State">State</label><span class="tooltiptext" id="invalidState">Please enter a valid state</span></li>
+               <li class="inline-middle"><input type="text" name = "State" id = "State" size = "4" value=""  onblur="checkState(this.value,'invalidState')"></li>
+
+               <li class="inline-right-label"><label for = "Zip">Zipcode</label><span class="tooltiptext" id="invalidZip">Invalid Zip Code</span></li>
+               <li class="inline-right"><input type="text" name = "Zip" id = "Zip" size = "12" maxlength="10" value=""  onblur="checkZip(this.value,'invalidZip')"></li>
+
+               <li class="inline-left-label"><label for = "phone">Phone: xxx-xxx-xxxx</label><span class="tooltiptext" id="invalidPhone">Please enter a valid phone number</span></li>
+               <li class="inline-left"><input type = "text" name = "phone" id = "phone" size = "20" value="" onblur="checkPhone(this.value,'invalidPhone')"></li>
+
+               <li class="inline-right-label"><label for = "email">Email Address</label></li>
+               <li class="inline-right"><input type = "email" name = "email" id = "email" size = "30" value="" ></li>
+
+
+               <li class="inline-left-label">
+                  Would you like to be added to our mailing list?
+                  <label for="mailing_list" style="float:none; margin-left: 20px">Yes</label>
+                  <input type="checkbox" checked="checked" name="mailing_list" id="mailing_list" value="Yes">
+               </li>
+               <li class="inline-left-label">Payment Method</label></li>
+               <li class="inline-left"><input type="radio" name = "payment" id = "visa" size = "20" value="Visa">Visa
+                  <input type = "radio" name = "payment" id = "mastercard"  value="MasterCard">Master Card
+                  <input type = "radio" name = "payment" id = "amex"  value="Amex">America Express
+                  <input type = "radio" name = "payment" id = "discover"  value="discover">Discover
+               </li>
+               <li class="inline-left-label"><label for = "CCN">Credit Card Number</label><span class="tooltiptext" id="invalidCCN">Invalid credit card number</span></li>
+               <li class="inline-left"><input type="text" size="22" name="CCN" id="CCN" value="" onblur="checkCCN(this.value,'invalidCCN')" required /></li>
+
+               <li class="inline-left-label"><label for = "date">Exp. Date</label><span class="tooltiptext" id="invaliddate">Invalid Date</span></li>
+               <li class="inline-left"><input type="text"  name="date" value="" id="date" onblur="checkDate(this.value,'invaliddate')"/></li>
+
+
+               <li>
+                  <label for = "action">&nbsp;
+                  </label>
+
+               </li>
+
+            </ul>
+
+      </fieldset>
+
+      <h2>Shipping information</h2>
+
+
+         <fieldset>
+            <span>Copy Billing information to shipping</span>
+            <input type="checkbox" id="copyBilltoShip" onclick="">
+
+            <ul class="tooltip">
+               <li class="inline-left-label"><label for = "firstname">First Name</label><span class="tooltiptext" id="invalidshipFirstName">First Name is required</span></li>
+               <li class="inline-left">  <input type = "text" name = "shipfirstname" id = "shipfirstname" size = "30" maxlength="80" value=""  oninput="checkData(this.value,'invalidFirstName')"></li>
+
+               <li class="inline-right-label"><label for = "lastname">Last Name</label><span class="tooltiptext" id="invalidshipLastName">Last Name is required</span></li>
+               <li class="inline-right"><input type = "text" name = "shiplastname" id = "shiplastname" size = "30" maxlength="80" value=""  oninput="checkData(this.value,'invalidLastName')"></li>
+
+               <li class="inline-left-label"><label for = "address1">Address</label><span class="tooltiptext" id="invalidshipAddress">Address is required</span></li>
+               <li class="inline-left"><input type = "text" name = "shipaddress1" id = "shipaddress1" size = "70" value=""  oninput="checkData(this.value,'invalidAddress')"></li>
+
+               <li class="inline-left-label"><label for = "address2">Address2 (Optional) Apartment, suite, floor, etc.</label></li>
+               <li class="inline-left"><input type = "text" name = "shipaddress2" id = "shipaddress2" size = "70" value="" ></li>
+
+               <li class="inline-left-label"><label for = "City">City</label><span class="tooltiptext" id="invalidCshipity">Please enter a city</span></li>
+               <li class="inline-left"><input type="text" name = "shipCity" id = "shipCity" size = "30" value=""  oninput="checkData(this.value,'invalidCity')">
+               </li>
+
+               <li class="inline-middle-label"><label for = "State">State</label><span class="tooltiptext" id="invalidshipState">Invalid State</span></li>
+               <li class="inline-middle"><input type="text" name = "shipState" id = "shipState" size = "4" value=""  oninput="checkState(this.value,'invalidState')"></li>
+
+               <li class="inline-right-label"><label for = "Zip">Zipcode</label><span class="tooltiptext" id="invalidshipZip">Invalid Zip Code</span></li>
+               <li class="inline-right"><input type="text" name = "shipZip" id = "shipZip" size = "12" maxlength="10" value=""  oninput="checkZip(this.value,'invalidZip')"></li>
+
+               <li class="inline-left-label"><label for = "phone">Phone</label></li>
+               <li class="inline-left"><input type = "text" name = "shipphone" id = "shipphone" size = "20" value="" ></li>
+
+               <li class="inline-right-label"><label for = "email">Email Address</label></li>
+               <li class="inline-right"><input type = "email" name = "shipemail" id = "shipemail" size = "30" value="" ></li>
+
+
+
+               <li>
+                  <label for = "action">&nbsp;
+                  </label>
+
+
+                  <input type = "submit" name = "action" id = "action" value = "Submit">
+               </li>
+
+            </ul>
+
+         </fieldset>
+         </form>
+<br>
+
+   <div id="footer">
+      <hr>
+      <ul>
+         <li><a href="#">Contact Us</a></li>
+         <li><a href="#">Legal</a></li>
+         <li><a href="team.html">About Us</a></li>
+         <li><a href="#">Site Map</a></li>
+      </ul>
+
+   </div>
+   </div>
+
+</main>
+
+</body>
+
+</html>
